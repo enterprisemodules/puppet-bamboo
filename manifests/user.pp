@@ -20,11 +20,12 @@ class bamboo::user inherits bamboo {
     require    => Exec['Make home parent if needed'],
   }
 
-  file { "${bamboo_home}/logs":
-    ensure => directory,
-    owner  => $username,
-    group  => $username,
-    mode   => '0755',
+  unless defined(File["${bamboo_home}/logs"]) {
+    file { "${bamboo_home}/logs":
+      ensure => directory,
+      owner  => $username,
+      group  => $username,
+      mode   => '0755',
+    }
   }
-
 }
